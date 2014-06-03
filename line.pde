@@ -16,9 +16,14 @@ void draw() {
   // Draw a line from previous mouse location to current mouse location.
   if (mousePressed)
     line(pmouseX, pmouseY, mouseX, mouseY);
+  loadPixels();
+  for (int i=0; i<width*height; i++)
+    if (pixels[i] < -100000)
+      pixels[i] = -16777216;
+  updatePixels();
   noFill();
   stroke(255, 0, 0);
-  line(px, py, px, py);
+  line(px, py, px, py-4);
 }
 
 void keyPressed() {
@@ -32,9 +37,10 @@ void keyPressed() {
   }
   loadPixels();
   for (int i=0; i<width*height; i++)
-    if (pixels[i] == color(255, 0, 0) || pixels[i] > -70000)
+    if (pixels[i] != -16777216)
       pixels[i] = color(255);
   updatePixels();
+  System.out.println(pixels[mouseY*width + mouseX]);
 }
 
 void move(boolean left) {
@@ -44,9 +50,10 @@ void move(boolean left) {
       if (get(px-6, py+i) == -16777216)
         valid = false;
     }
+    valid = true;
     if (valid) {
-      for (int i=20; i>-20; i--) {
-        for (int j=0; j<3; j++) {
+      for (int i=3; i>-3; i--) {
+        for (int j=1; j>=-1; j--) {
           if (get(px-j, py+i) == -16777216) {
             px = px-1;
             py = py+i-3;
@@ -61,9 +68,10 @@ void move(boolean left) {
       if (get(px+1, py+i) == -16777216)
         valid = false;
     }
+    valid = true;
     if (valid) {
-      for (int i=20; i>-20; i--) {
-        for (int j=0; j<3; j++) {
+      for (int i=3; i>-3; i--) {
+        for (int j=1; j>=-1; j--) {
           if (get(px+j, py+i) == -16777216) {
             px = px+1;
             py = py+i-3;

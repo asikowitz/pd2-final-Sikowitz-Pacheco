@@ -1,4 +1,3 @@
-
 public class Player {
 	int x;
 	int y;
@@ -16,14 +15,22 @@ public class Player {
 	public void run() {
 		p.loadPixels();
 		checkGrounded();
-		
-		if (!grounded) {
-			if (!(p.pixels[(y+4+(int)a)*p.width + x] < -100000)) {
+
+		if (!grounded && a > 0) {
+			if (y+4+a < p.height && !(p.pixels[(y+4+(int)a)*p.width + x] < -100000)) {
 				y = (int)Math.round(y+a);
 				a = a+0.15;
 			}
 			else
 				a = a/3;
+		}
+		else if (!grounded) {
+			if (y-4+a > 0 && !(p.pixels[(y-4+(int)a)*p.width + x] < -100000)) {
+				y = (int)Math.round(y+a);
+				a = a+0.15;
+			}
+			else
+				a = 0.5;
 		}
 		else
 			a = 0.5;
@@ -43,16 +50,26 @@ public class Player {
 		}
 		
 		if (!blocked) {
-			for (int i=4; i>=-2; i--)
+			for (int i=4; i>=-6; i--) {
 				if (p.pixels[(y-i)*p.width + x + sign] < -100000) {
 					x = x + sign;
-					y = y - i - 2;
+					y = y - i - 3;
 					return;
 				}
+			}
 			
 			//If no places to move, fall
 			x = x + sign;
 		}
+	}
+	
+	public boolean jump() {
+		if (grounded) {
+			y = y-2;
+			a = -4;
+			return true;
+		}
+		return false;
 	}
 	
 	public void checkGrounded() {
@@ -72,4 +89,3 @@ public class Player {
 		return y;
 	}
 }
-

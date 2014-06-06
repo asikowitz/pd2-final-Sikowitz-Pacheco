@@ -7,3 +7,4 @@ Date : Name : Description
 06/04/14 : Kai Pacheco : polished the throwing objects code<br>
 06/04/14 : Andrew Sikowitz : Remade line running code with classes (push screwed up) <br>
 06/05/14 : Andrew Sikowitz : Made player class, made player move and fall with acceleration, revamped the way the game interacts with keystrokes, prevented drawing walls on top of character, made walls disappear. <br>
+06/05/14 : Andrew Sikowitz : Created energy mechanic, made walls disappear, created jumping mechanic, allowed for multiple keys to be pressed down at the same time.

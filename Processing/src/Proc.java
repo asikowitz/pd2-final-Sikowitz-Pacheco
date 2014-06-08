@@ -1,5 +1,4 @@
 import processing.core.*;
-
 import java.util.*;
 import java.net.*;
 import java.io.*;
@@ -33,10 +32,11 @@ public class Proc extends PApplet {
 		p = new Player(s/2, s/2, this);
 		energy = 600;
 		int port = 6066;
-		String serverName = "localhost";
+		String serverName = "127.0.0.1";
 		
 		try {
 			serverSocket = new ServerSocket(port);
+			System.out.println(serverSocket.getLocalPort());
 			serverSocket.setSoTimeout(10000);
 			System.out.println("Connecting to " + serverName + " on port " + port);
 			client = new Socket(serverName, port);

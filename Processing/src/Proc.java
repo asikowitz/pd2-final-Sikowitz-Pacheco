@@ -27,7 +27,7 @@ public class Proc extends PApplet {
 		noSmooth();
 		strokeWeight(8);
 		stroke(0);
-		textFont(loadFont("Font.vlw"));
+		//textFont(loadFont("Font.vlw"));
 		walls.add(new Wall(s/2-10, s/2+10, s/2+10, s/2+10, this));
 		p = new Player(s/2, s/2, this);
 		energy = 600;

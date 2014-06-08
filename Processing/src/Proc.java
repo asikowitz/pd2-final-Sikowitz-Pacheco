@@ -32,7 +32,7 @@ public class Proc extends PApplet {
 		p = new Player(s/2, s/2, this);
 		energy = 600;
 		int port = 6066;
-		String serverName = "127.0.0.1";
+		String serverName = "173.56.24.39";
 		
 		try {
 			serverSocket = new ServerSocket(port);

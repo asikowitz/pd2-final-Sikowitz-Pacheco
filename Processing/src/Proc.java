@@ -32,16 +32,19 @@ public class Proc extends PApplet {
 		walls.add(new Wall(s/2-10, s/2+10, s/2+10, s/2+10, this));
 		p = new Player(s/2, s/2, this);
 		energy = 600;
-		int port = 6066;
+		int port = 60396;
 		String serverName = "149.89.150.105";
 		
-		try {
-			client = new Socket(serverName, port);
-			System.out.println("Just connected to " + client.getRemoteSocketAddress());
-			out = new ObjectOutputStream(client.getOutputStream());
-			in = new ObjectInputStream(client.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
+		while (true) {
+			try {
+				client = new Socket(serverName, port);
+				System.out.println("Just connected to " + client.getRemoteSocketAddress());
+				out = new ObjectOutputStream(client.getOutputStream());
+				in = new ObjectInputStream(client.getInputStream());
+				break;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -14,9 +14,9 @@ public class Server {
 			boolean listeningSocket = true;
 			
 			try {
-				serverSocket = new ServerSocket(6066);
+				serverSocket = new ServerSocket(60396);
 			} catch (IOException e) {
-				System.err.println("Could not listen on port: 6066");
+				System.err.println("Could not listen on port: 60396");
 			}
 	
 			while (listeningSocket) {

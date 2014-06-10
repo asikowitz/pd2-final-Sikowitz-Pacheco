@@ -35,7 +35,7 @@ public class Proc extends PApplet {
 		int port = 6066;
 		String serverName = "25.3.52.68";
 		
-		while (true) {
+		/*while (true) {
 			try {
 				client = new Socket(serverName, port);
 				System.out.println("Just connected to " + client.getRemoteSocketAddress());
@@ -45,7 +45,7 @@ public class Proc extends PApplet {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
 	public void draw() {

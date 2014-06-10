@@ -21,15 +21,18 @@ public class Server {
 	
 			while (listeningSocket) {
 				sockets[c] = serverSocket.accept();
+				System.out.println("Just connected to " + sockets[c].getRemoteSocketAddress());
 				c++;
+				
+				if (c - finished >= 2) {
+					System.out.println("Game made");
+					MiniServer mini = new MiniServer(sockets[finished], sockets[finished+1]);
+					mini.start();
+					finished = finished + 2;
+				}
 			}
+			System.out.println("Goodbye");
 			serverSocket.close();
-			
-			if (finished - c >= 2) {
-				MiniServer mini = new MiniServer(sockets[c], sockets[c+1]);
-				mini.start();
-				finished = finished + 2;
-			}
 		}
 	}
 }

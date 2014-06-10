@@ -1,4 +1,5 @@
 import processing.core.*;
+
 import java.util.*;
 import java.net.*;
 import java.io.*;
@@ -10,8 +11,8 @@ public class Proc extends PApplet {
 	private int energy;
 	private int[] sent, rec;
 	
-	private ServerSocket serverSocket;
-	private Socket client, server;
+	//private ServerSocket serverSocket;
+	private Socket client; //, server;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	
@@ -32,11 +33,20 @@ public class Proc extends PApplet {
 		p = new Player(s/2, s/2, this);
 		energy = 600;
 		int port = 6066;
-		String serverName = "173.56.24.39";
+		String serverName = "149.89.150.105";
 		
 		try {
+			client = new Socket(serverName, port);
+			out = new ObjectOutputStream(client.getOutputStream());
+			in = new ObjectInputStream(client.getInputStream());
+			//out.writeUTF("Hello?");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		/*try {
 			serverSocket = new ServerSocket(port);
-			System.out.println(serverSocket.getLocalPort());
+			System.out.println(serverSocket.getInetAddress().getHostName());
 			serverSocket.setSoTimeout(10000);
 			System.out.println("Connecting to " + serverName + " on port " + port);
 			client = new Socket(serverName, port);
@@ -55,12 +65,12 @@ public class Proc extends PApplet {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
 	public void draw() {
 		//Clear, redraw bottom, draw and write energy
-		sent = new int[walls.size()*5+2];
+		/*sent = new int[walls.size()*5+2];
 		for (int i=0; i<walls.size(); i++)
 			walls.get(i).addInt(sent, i);
 		sent[sent.length-2] = p.getX();
@@ -73,7 +83,7 @@ public class Proc extends PApplet {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		background(0);
 		fill(255);

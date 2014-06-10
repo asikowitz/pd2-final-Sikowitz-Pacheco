@@ -33,7 +33,7 @@ public class Proc extends PApplet {
 		p = new Player(s/2, s/2, this);
 		energy = 600;
 		int port = 6066;
-		String serverName = "149.89.150.105";
+		String serverName = "25.3.52.68";
 		
 		while (true) {
 			try {

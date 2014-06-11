@@ -15,7 +15,6 @@ public class Server {
 			
 			try {
 				serverSocket = new ServerSocket(6066);
-				System.out.println(InetAddress.getLocalHost());
 			} catch (IOException e) {
 				System.err.println("Could not listen on port: 6066");
 			}

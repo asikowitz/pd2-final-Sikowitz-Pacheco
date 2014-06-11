@@ -41,7 +41,14 @@ public class Player {
 		p.strokeWeight(8);
 		p.point(x, y);
 	}
-	
+
+        public void display2() {
+              p.noSmooth();
+              p.stroke(255, 0, 0);
+              p.strokeWeight(8);
+              p.point(s+x, y);
+        }
+    	
 	public void move(int sign) {
 		boolean blocked = false;
 		for (int i=5; i<8; i++) {
@@ -63,8 +70,8 @@ public class Player {
 		}
 	}
 	
-	public boolean jump() {
-		if (grounded) {
+	public boolean jump(int energy) {
+		if (grounded && energy > 30) {
 			y = y-2;
 			a = -4;
 			return true;

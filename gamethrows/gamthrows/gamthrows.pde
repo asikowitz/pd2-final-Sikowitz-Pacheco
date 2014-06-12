@@ -2,7 +2,8 @@ int throwX;
 int throwY;
 boolean midGuide;
 boolean midDraw;
-String item="Drone";
+String item="Atomic";
+Weapon n;
 ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 void setup() {
   size(600,600);
@@ -11,6 +12,13 @@ void setup() {
   rect(150,150,300,300);
   midGuide=false;
   midDraw=false;
+  if(item.equals("Drone")){
+     n = new Drone(throwX,throwY,calculateSpeedX(throwX,mouseX),calculateSpeedY(throwY,mouseY));
+  }else if(item.equals("Atomic")){
+     n = new Atomic(throwX,throwY,calculateSpeedX(throwX,mouseX),calculateSpeedY(throwY,mouseY));
+  }else{
+     n = new Grenade(throwX,throwY,calculateSpeedX(throwX,mouseX),calculateSpeedY(throwY,mouseY));
+  }
 }
 
 void draw() {
@@ -34,8 +42,7 @@ void draw() {
        midGuide=true;}}
    }else{
      if(mousePressed && !(midDraw)){
-       stroke(255,0,0);
-       arrow(throwX,throwY,mouseX,mouseY);
+       n.guide(throwX,throwY,mouseX,mouseY);
      }
     }
   weaponsAct();
@@ -56,16 +63,7 @@ void weaponsAct(){
     }
   }
 }
-void arrow(int x1, int y1, int x2, int y2) {
-  line(x1, y1, x2, y2);
-  pushMatrix();
-  translate(x2, y2);
-  float a = atan2(x1-x2, y2-y1);
-  rotate(a);
-  line(0, 0, -10, -10);
-  line(0, 0, 10, -10);
-  popMatrix();
-} 
+
 int calculateSpeedX(int x1,int x2){
   return (x2-x1)/10;
 }
@@ -78,9 +76,20 @@ void mouseReleased(){
     if(midGuide && !(midDraw)){
       stroke(255,0,0);
       fill(255,0,0);
-      Weapon n;
       if(item.equals("Drone")){
-        n = new Drone(throwX,throwY,calculateSpeedX(throwX,mouseX),calculateSpeedY(throwY,mouseY));
+        //drones always go left or right at constant speed so we modify the direction
+        int mx;
+        int my=throwY;
+        if(mouseX<throwX){
+          mx=throwX-10;
+        }else{
+          mx=throwX+10;
+        }
+        n = new Drone(throwX,throwY,calculateSpeedX(throwX,mx),calculateSpeedY(throwY,my));
+      }else if(item.equals("Atomic")){
+        int mx=throwX;
+        int my=throwY+10;
+        n = new Atomic(throwX,throwY,calculateSpeedX(throwX,mx),calculateSpeedY(throwY,my));
       }else{
         n = new Grenade(throwX,throwY,calculateSpeedX(throwX,mouseX),calculateSpeedY(throwY,mouseY));
       }

@@ -24,5 +24,9 @@ public class Atomic extends Weapon {
 		p.ellipse(x, y, 20, 30);
 		p.rect(x - 10, y - 25, 20, 10);
 	}
+	public void explode(){
+		p.fill(200,10,10);
+    	p.ellipse(x,y,100,100);
+  	}
 
 }

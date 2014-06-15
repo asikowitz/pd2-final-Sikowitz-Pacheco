@@ -106,7 +106,7 @@ public class Proc extends PApplet {
 		}
 		
 		// Draw a line from previous mouse location to current mouse location.
-		if (mousePressed && !midGuide && 
+		if (mousePressed && !midGuide &&
 			pmouseX < 100+s && mouseX < 100+s && pmouseX > 100 && mouseX > 100 &&
 			pmouseY < 100+s && mouseY < 100+s && pmouseY > 100 && mouseY > 100 &&
 			(!between(pmouseX, mouseX, p.getX()) || !between(pmouseY, mouseY, p.getY())))
@@ -118,6 +118,8 @@ public class Proc extends PApplet {
 				energy = energy - dist;
 			}
 		}
+		else if (mousePressed && !midGuide && mouseX > 300+s && mouseX < 300+2*s && mouseY > 100 && mouseY < 100+s)
+			midDraw = true;
 		else if (!midDraw) {
 			strokeWeight(1);
 			if (midGuide)
@@ -195,7 +197,7 @@ public class Proc extends PApplet {
 				n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
 			else if (item.equals("Grenade"))
 				n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
-			
+			System.out.println(n);
 			weapons.add(n);
 			n.display();
 		}

@@ -2,7 +2,7 @@ int throwX;
 int throwY;
 boolean midGuide;
 boolean midDraw;
-String item="Atomic";
+String item="Grenade";
 Weapon n;
 ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 void setup() {

@@ -5,7 +5,7 @@ import java.net.*;
 import java.io.*;
 
 public class Proc extends PApplet {
-	private static final int s = 600;
+	private static final int s = 400;
 	private ArrayList<Wall> walls = new ArrayList<Wall>();
 	private Player p;
 	private int energy;
@@ -28,24 +28,25 @@ public class Proc extends PApplet {
 		noSmooth();
 		strokeWeight(8);
 		stroke(0);
-		//textFont(loadFont("Font.vlw"));
+		textFont(loadFont("Font.vlw"));
+		textSize(20);
 		walls.add(new Wall(s/2-10, s/2+10, s/2+10, s/2+10, this));
 		p = new Player(s/2, s/2, this);
 		energy = 600;
 		int port = 6066;
-		String serverName = "149.89.150.121";
+		String serverName = "localhost";
 		
-		while (true) {
+		System.out.println("Attempting to connect to " + serverName + " on port " + port);
+		
+		/*while (true) {
 			try {
 				client = new Socket(serverName, port);
 				System.out.println("Just connected to " + client.getRemoteSocketAddress());
 				out = new ObjectOutputStream(client.getOutputStream());
 				in = new ObjectInputStream(client.getInputStream());
 				break;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+			} catch (IOException e) {}
+		}*/
 	}
 
 	public void draw() {
@@ -56,14 +57,14 @@ public class Proc extends PApplet {
 		sent[sent.length-2] = p.getX();
 		sent[sent.length-1] = p.getY();
 		
-		try {
+		/*try {
 			out.writeObject(sent);
 			rec = (int[]) in.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		background(0);
 		fill(255);
@@ -77,7 +78,7 @@ public class Proc extends PApplet {
 		stroke(0, 0, 255);
 		fill(0);
 		text("Energy", s*2/3+100, s/17+100);
-		line(s*2/3+100, s/12+100, s*2/3+energy/4+100, s/12+100);
+		line(s*2/3+100, s/12+100, s*2/3+energy/5+100, s/12+100);
 		noSmooth();
 		if (energy < 600)
 			energy = energy+2;

@@ -35,7 +35,7 @@ public class Proc extends PApplet {
 		noSmooth();
 		strokeWeight(8);
 		stroke(0);
-		textFont(loadFont("Font.vlw"));
+		//textFont(loadFont("Font.vlw"));
 		textSize(20);
 		walls.add(new Wall(s/2-10, s/2+10, s/2+10, s/2+10, this));
 		p = new Player(s/2, s/2, this);
@@ -118,6 +118,8 @@ public class Proc extends PApplet {
 				energy = energy - dist;
 			}
 		}
+		else if (mousePressed && !midGuide && mouseX > 300+s && mouseX < 300+2*s && mouseY > 100 && mouseY < 100+s)
+			midDraw = true;
 		else if (!midDraw) {
 			strokeWeight(1);
 			if (midGuide)
@@ -196,7 +198,6 @@ public class Proc extends PApplet {
 			else if (item.equals("Grenade"))
 				n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
 			
-			System.out.println(n);
 			weapons.add(n);
 			n.display();
 		}

@@ -17,7 +17,7 @@ public class Grenade extends Weapon {
 		return "Grenade";
 	}
 
-	public void act() {
+	public boolean act() {
 		// for (int i=5; i<8; i++) {
 		// if (p.pixels[(y-i)*p.width + x+sign] < -100000)
 		// blocked = true;
@@ -27,6 +27,7 @@ public class Grenade extends Weapon {
 			y = y + speedY;
 			speedY = speedY - a;
 		}
+		return false;
 	}
 
 	public void display() {

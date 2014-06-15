@@ -13,9 +13,10 @@ public class Drone extends Weapon {
 		return "Drone";
 	}
 
-	public void act() {
+	public boolean act() {
 		x = x + speedX;
 		y = y + speedY;
+		return false;
 	}
 
 	public void display() {

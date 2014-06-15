@@ -27,7 +27,9 @@ public class Weapon {
 		p.rect(x, y, 10, 10);
 	}
 
-	public void act() {}
+	public boolean act() {
+		return false;
+	}
 	public String toString() {return "";}
 	public void explode(){}
 }

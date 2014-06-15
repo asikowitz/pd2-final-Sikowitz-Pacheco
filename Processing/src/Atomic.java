@@ -13,9 +13,10 @@ public class Atomic extends Weapon {
 		return "Atomic";
 	}
 
-	public void act() {
+	public boolean act() {
 		x = x + speedX;
 		y = y + speedY;
+		return false;
 	}
 
 	public void display() {

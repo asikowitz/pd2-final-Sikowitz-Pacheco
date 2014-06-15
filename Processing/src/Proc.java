@@ -178,7 +178,9 @@ public class Proc extends PApplet {
 		}
 		
 		p.run();
-		weaponsAct();
+		if (weaponsAct()==true){
+			weapons.remove(n);
+		}
 	}
 	
 	public void mouseReleased() {

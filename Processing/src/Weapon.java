@@ -29,4 +29,5 @@ public class Weapon {
 
 	public void act() {}
 	public String toString() {return "";}
+	public void explode(){}
 }

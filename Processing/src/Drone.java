@@ -25,5 +25,9 @@ public class Drone extends Weapon {
 		p.ellipse(x, y + 5, 5, 10);
 		p.ellipse(x, y - 5, 5, 10);
 	}
+	public void explode(){
+   		 fill(200,10,10);
+    		ellipse(x,y,100,100);
+  	}
 
 }

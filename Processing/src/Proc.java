@@ -35,7 +35,7 @@ public class Proc extends PApplet {
 		noSmooth();
 		strokeWeight(8);
 		stroke(0);
-		textFont(loadFont("Font.vlw"));
+		//textFont(loadFont("Font.vlw"));
 		textSize(20);
 		walls.add(new Wall(s/2-10, s/2+10, s/2+10, s/2+10, this));
 		p = new Player(s/2, s/2, this);
@@ -106,7 +106,7 @@ public class Proc extends PApplet {
 		}
 		
 		// Draw a line from previous mouse location to current mouse location.
-		if (mousePressed && !midGuide && 
+		if (mousePressed && !midGuide && !midFlight
 			pmouseX < 100+s && mouseX < 100+s && pmouseX > 100 && mouseX > 100 &&
 			pmouseY < 100+s && mouseY < 100+s && pmouseY > 100 && mouseY > 100 &&
 			(!between(pmouseX, mouseX, p.getX()) || !between(pmouseY, mouseY, p.getY())))
@@ -118,7 +118,7 @@ public class Proc extends PApplet {
 				energy = energy - dist;
 			}
 		}
-		else if (!midDraw) {
+		else if (!midDraw && !midFlight) {
 			strokeWeight(1);
 			if (midGuide)
 				guide(throwX, throwY, mouseX, mouseY);
@@ -180,7 +180,7 @@ public class Proc extends PApplet {
 	}
 	
 	public void mouseReleased() {
-		if (midGuide) {
+		if (midGuide && !midFlight) {
 			stroke(255, 0, 0);
 			fill(255, 0, 0);
 			Weapon n = null;
@@ -190,6 +190,7 @@ public class Proc extends PApplet {
 					n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX - 10), calculateSpeed(throwY, throwY), this);
 				else
 					n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX + 10), calculateSpeed(throwY, throwY), this);
+				midFlight=true;
 			}
 			else if (item.equals("Atomic"))
 				n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
@@ -199,6 +200,9 @@ public class Proc extends PApplet {
 			System.out.println(n);
 			weapons.add(n);
 			n.display();
+		}else if(midFlight){
+			midFlight=false;
+
 		}
 		
 		midDraw = false;
@@ -260,4 +264,10 @@ public class Proc extends PApplet {
 	public static void main(String[] args) {
 		PApplet.main(new String[] { "--present", "Proc" });
 	}
+	void mousePressed(){
+	  if(midFlight){
+	      n.explode();
+	      weapons.remove(n);
+	  }
+	}	
 }

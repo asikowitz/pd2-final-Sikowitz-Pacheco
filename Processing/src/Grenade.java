@@ -36,4 +36,8 @@ public class Grenade extends Weapon {
 		p.ellipse(x, y, 10, 15);
 		p.strokeWeight(8);
 	}
+	public void explode(){
+   		 fill(200,10,10);
+    		ellipse(x,y,100,100);
+  	}
 }

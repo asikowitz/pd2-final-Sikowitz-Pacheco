@@ -118,8 +118,6 @@ public class Proc extends PApplet {
 				energy = energy - dist;
 			}
 		}
-		else if (mousePressed && !midGuide && mouseX > 300+s && mouseX < 300+2*s && mouseY > 100 && mouseY < 100+s)
-			midDraw = true;
 		else if (!midDraw) {
 			strokeWeight(1);
 			if (midGuide)

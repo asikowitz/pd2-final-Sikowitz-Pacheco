@@ -118,7 +118,13 @@ public class Proc extends PApplet {
 				energy = energy - dist;
 			}
 		}
+<<<<<<< HEAD
 		else if (!midDraw && !midFlight) {
+=======
+		else if (mousePressed && !midGuide && mouseX > 300+s && mouseX < 300+2*s && mouseY > 100 && mouseY < 100+s)
+			midDraw = true;
+		else if (!midDraw) {
+>>>>>>> origin/master
 			strokeWeight(1);
 			if (midGuide)
 				guide(throwX, throwY, mouseX, mouseY);
@@ -196,7 +202,6 @@ public class Proc extends PApplet {
 				n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
 			else if (item.equals("Grenade"))
 				n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
-			
 			System.out.println(n);
 			weapons.add(n);
 			n.display();

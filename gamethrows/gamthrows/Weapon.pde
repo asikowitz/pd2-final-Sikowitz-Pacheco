@@ -59,4 +59,5 @@ public class Weapon{
       rect(x,y,10,10);
   }
   void act(){}
+  void explode(){}
 }

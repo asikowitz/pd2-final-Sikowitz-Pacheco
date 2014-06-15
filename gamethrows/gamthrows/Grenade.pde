@@ -41,5 +41,8 @@ public class Grenade extends Weapon{
     stroke(255,0,0);
     arrow(x1,y1,x2,y2);
   }
+  void explode(){}
+  
+  
   
 }

@@ -22,5 +22,7 @@ public class Atomic extends Weapon{
       ellipse(x,y,20,30);
       rect(x-10,y-25,20,10);
   }
-
+  void explode(){
+  
+  }
 }

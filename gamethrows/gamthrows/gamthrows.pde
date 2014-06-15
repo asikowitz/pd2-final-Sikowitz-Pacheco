@@ -2,7 +2,8 @@ int throwX;
 int throwY;
 boolean midGuide;
 boolean midDraw;
-String item="Grenade";
+String item="Drone";
+boolean midFlight;
 Weapon n;
 ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 void setup() {
@@ -27,7 +28,7 @@ void draw() {
   background(100);
   fill(255);
   rect(150,150,300,300);
-  if(!(midGuide)){
+  if(!(midGuide)&& !(midFlight )){
     if(mouseX>150 && mouseY>150 && mouseX<450 && mouseY<450){
       if (mousePressed == true) {
         line(mouseX, mouseY, pmouseX, pmouseY);
@@ -41,7 +42,7 @@ void draw() {
        throwY=mouseY;
        midGuide=true;}}
    }else{
-     if(mousePressed && !(midDraw)){
+     if(mousePressed && !(midDraw) && !(midFlight)){
        n.guide(throwX,throwY,mouseX,mouseY);
      }
     }
@@ -73,7 +74,7 @@ int calculateSpeedY(int y1,int y2){
 }
 
 void mouseReleased(){
-    if(midGuide && !(midDraw)){
+    if(midGuide && !(midDraw) && !(midFlight)){
       stroke(255,0,0);
       fill(255,0,0);
       if(item.equals("Drone")){
@@ -86,6 +87,7 @@ void mouseReleased(){
           mx=throwX+10;
         }
         n = new Drone(throwX,throwY,calculateSpeedX(throwX,mx),calculateSpeedY(throwY,my));
+        midFlight=true;
       }else if(item.equals("Atomic")){
         int mx=throwX;
         int my=throwY+10;
@@ -96,6 +98,15 @@ void mouseReleased(){
       n.setMidThrow(true);
       weapons.add(n);
       n.display();
-      }
+    }else if(midFlight){
+      midFlight=false;
+    }
       midGuide=false;
+}
+
+void mousePressed(){
+  if(midFlight){
+      n.explode();
+      weapons.remove(n);
+  }
 }

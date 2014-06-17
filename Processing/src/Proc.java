@@ -7,6 +7,7 @@ import java.io.*;
 public class Proc extends PApplet {
 	private static final int s = 400;
 	private ArrayList<Wall> walls = new ArrayList<Wall>();
+	//private LinkedList walls = new LinkedList(); //Linked list specifically designed for walls, so no <specification> necessary
 	private Player p;
 	private int energy;
 	private int[] sent, rec;
@@ -26,7 +27,7 @@ public class Proc extends PApplet {
 	//For weapons
 	private int throwX, throwY;
 	private boolean midGuide, midDraw;
-	private int item = 0;
+	private int item = 4;
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 	
 	public void setup() {
@@ -45,7 +46,7 @@ public class Proc extends PApplet {
   		
 		energy = 600;
 		int port = 6066;
-		String serverName = "localhost";
+		String serverName = args[0];
 		
 		System.out.println("Attempting to connect to " + serverName + " on port " + port);
 		

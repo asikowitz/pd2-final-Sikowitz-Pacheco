@@ -199,6 +199,13 @@ public class Proc extends PApplet {
 				n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
 			else if (item.equals("Grenade"))
 				n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
+			else if (item.equals("Laser")){
+				if((n.toString()).equals("Laser")){
+          				weapons.remove(n);
+        			}
+				n=new Laser(throwX,throwY,mouseX,mouseY);
+				//The parameters are irrelevant
+			}
 			System.out.println(n);
 			weapons.add(n);
 			n.display();

@@ -8,11 +8,18 @@ public class Weapon {
 	boolean Alive;
 	PApplet p;
 	int life;
-
+	int count=10;
 	public Weapon(PApplet p) {
 		this.p = p;
 		Alive = true;
 		life=100;
+		count=10;
+	}
+	public void setCount(int c){
+		count=c;
+	}
+	public int getCount(){
+		return count;
 	}
 	public void setLife(int x){
 		life=x

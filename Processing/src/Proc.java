@@ -28,6 +28,7 @@ public class Proc extends PApplet {
 	private boolean midGuide, midDraw;
 	private String item="Grenade";
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+	private ArrayList<Weapon> dead=new ArrayList<Weapon>();
 	
 	public void setup() {
 		size(s*2+400, s+200);
@@ -259,7 +260,16 @@ public class Proc extends PApplet {
 				weapons.get(x).display();
 			} else {
 				(weapons.get(x)).explode();
+				dead.add(weapons.get(x));
 				weapons.remove(x);
+			}
+		}
+		for(int x=0;x<dead.size();x++){
+			if(dead.get(x).getCount()<=0){
+				dead.remove(x);
+			}else{
+				dead.get(x).explode();
+				dead.get(x).setCount(dead.get(x).getCount()-1);
 			}
 		}
 	}

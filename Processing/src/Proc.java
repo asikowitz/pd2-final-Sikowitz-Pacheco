@@ -254,10 +254,11 @@ public class Proc extends PApplet {
 
 	private void weaponsAct() {
 		for (int x = 0; x < weapons.size(); x++) {
-			if (weapons.get(x).getMidThrow()) {
+			if (weapons.get(x).Alive()) {
 				weapons.get(x).act();
 				weapons.get(x).display();
 			} else {
+				(weapons.get(x)).explode();
 				weapons.remove(x);
 			}
 		}

@@ -6,12 +6,15 @@ public class Laser extends Weapon{
     setSX(sx);
     setSY(sy);
     blocked=false;
+	setAlive(true);
+	setLife(100);
   }
   String toString(){
     return "Laser";
   }
-  void act(){
-  }
+  boolean act(){
+  	return false;
+	}
   void display(){
       stroke(255,0,0);
       fill(255,0,0);

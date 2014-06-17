@@ -5,20 +5,25 @@ public class Weapon {
 	int a = -1;
 	String type;
 	int speedX, speedY, gravity;
-	boolean midThrow;
+	boolean Alive;
 	PApplet p;
+	int life;
 
 	public Weapon(PApplet p) {
 		this.p = p;
-		midThrow = true;
+		Alive = true;
+		life=100;
+	}
+	public void setLife(int x){
+		life=x
 	}
 
-	public boolean getMidThrow() {
-		return midThrow;
+	public boolean getAlive() {
+		return Alive;
 	}
 
-	public void setMidThrow(boolean x) {
-		midThrow = x;
+	public void setAlive(boolean x) {
+		Alive = x;
 	}
 
 	public void display() {
@@ -28,6 +33,17 @@ public class Weapon {
 	}
 
 	public boolean act() {
+		if(x<0 || y<0 || x>600 || y>600){
+      			life=0;
+    		}else{
+    			life=life-1;
+    		}
+		if(life<=0){
+			setAlive(false);
+		}
+    		if(!getAlive()){
+      			return true;	
+    		}
 		return false;
 	}
 	public String toString() {return "";}

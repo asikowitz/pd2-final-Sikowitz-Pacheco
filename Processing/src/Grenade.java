@@ -11,6 +11,8 @@ public class Grenade extends Weapon {
 		speedX = sx;
 		speedY = sy;
 		blocked = false;
+		setAlive(true);
+		setLife(100);
 	}
 
 	public String toString() {
@@ -18,15 +20,22 @@ public class Grenade extends Weapon {
 	}
 
 	public boolean act() {
-		// for (int i=5; i<8; i++) {
-		// if (p.pixels[(y-i)*p.width + x+sign] < -100000)
-		// blocked = true;
-		// }
 		if (!blocked) {
 			x = x + speedX;
 			y = y + speedY;
 			speedY = speedY - a;
 		}
+		if(x<0 || y<0 || x>600 || y>600){
+      			life=0;
+    		}else{
+    			life=life-1;
+    		}
+		if(life<=0){
+			setAlive(false);
+		}
+    		if(!getAlive()){
+      			return true;	
+    		}
 		return false;
 	}
 

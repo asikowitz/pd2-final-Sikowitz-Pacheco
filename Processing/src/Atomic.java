@@ -7,6 +7,8 @@ public class Atomic extends Weapon {
 		this.y = y;
 		speedX = sx;
 		speedY = sy;
+		setAlive(true);
+		setLife(100);
 	}
 
 	public String toString() {
@@ -16,6 +18,17 @@ public class Atomic extends Weapon {
 	public boolean act() {
 		x = x + speedX;
 		y = y + speedY;
+		if(x<0 || y<0 || x>600 || y>600){
+      			life=0;
+    		}else{
+    			life=life-1;
+    		}
+		if(life<=0){
+			setAlive(false);
+		}
+    		if(!getAlive()){
+      			return true;	
+    		}
 		return false;
 	}
 

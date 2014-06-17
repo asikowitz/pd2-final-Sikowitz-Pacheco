@@ -7,6 +7,8 @@ public class HomingMissle extends Weapon{
     setSX(sx);
     setSY(sy);
     this.n=n;
+	setAlive(true);
+	setLife(100);
   }
   String toString(){
     return "Homing Missle";
@@ -26,7 +28,18 @@ public class HomingMissle extends Weapon{
      }
      x=x+createSpeedX();
      y=y+createSpeedY();
-     return false;
+     if(x<0 || y<0 || x>600 || y>600){
+      	life=0;
+    }else{
+    			life=life-1;
+    		}
+		if(life<=0){
+			setAlive(false);
+		}
+    		if(!getAlive()){
+      			return true;	
+    		}
+		return false;
     }
   
   void display(){

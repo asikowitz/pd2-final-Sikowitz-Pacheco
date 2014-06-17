@@ -249,6 +249,9 @@ public class Proc extends PApplet {
 			else if (item == 4)
 				n = new Homing(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), 
 						rec[rec.length-2]+s+200, rec[rec.length-1], this);
+			else if (item == 3){
+				n=new Laser(throwX,throwY,mouseX,mouseY, this); //Parameters irrelevant
+			}
 			weapons.add(n);
 			n.display();
 		}

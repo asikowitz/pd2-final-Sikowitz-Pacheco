@@ -4,11 +4,14 @@ public class Weapon {
 	int x, y, c;
 	int type;
 	int speedX, speedY;
+
 	PApplet p;
+	int life;
 
 	public Weapon(PApplet p) {
 		c = 10;
 		this.p = p;
+		life=100;
 	}
 
 	public void display() {
@@ -39,7 +42,7 @@ public class Weapon {
 			for (int j=-8; j<8; j++)
 				if (p.pixels[(y+i)*p.width + x+j] < -10 && !(x > 1080 || x < 720) && !(y > 480 || y < 120)) {
 					return true;
-				}		
+				}
 		return false;
 	}
 	

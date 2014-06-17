@@ -26,7 +26,7 @@ public class Proc extends PApplet {
 	//For weapons
 	private int throwX, throwY;
 	private boolean midGuide, midDraw;
-	private String item="Grenade";
+	private int item = 0;
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 	
 	public void setup() {
@@ -49,7 +49,7 @@ public class Proc extends PApplet {
 		
 		System.out.println("Attempting to connect to " + serverName + " on port " + port);
 		
-		/*while (true) {
+		while (true) {
 			try {
 				client = new Socket(serverName, port);
 				System.out.println("Just connected to " + client.getRemoteSocketAddress());
@@ -57,25 +57,36 @@ public class Proc extends PApplet {
 				in = new ObjectInputStream(client.getInputStream());
 				break;
 			} catch (IOException e) {}
-		}*/
+		}
 	}
 
 	public void draw() {
+		//loadPixels();
+		//System.out.println(pixels[mouseY*width + mouseX]);
 		//Clear, redraw bottom, draw and write energy
-		sent = new int[walls.size()*5+2];
-		for (int i=0; i<walls.size(); i++)
-			walls.get(i).addInt(sent, i);
+	
+		sent = new int[walls.size()*5+3*weapons.size()+3];
+		int c = 0;
+		for (int i=0; i<walls.size(); i++, c=c+5)
+			walls.get(i).addInt(sent, c);
+		sent[c] = -1;
+		c++;
+		for (int i=0; i<weapons.size(); i++, c=c+3)
+			weapons.get(i).addInt(sent, c);
 		sent[sent.length-2] = p.getX();
 		sent[sent.length-1] = p.getY();
 		
-		/*try {
+		try {
 			out.writeObject(sent);
 			rec = (int[]) in.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
+			rec = new int[2];
+			rec[0] = s + s/2 + 300;
+			rec[1] = s/2 + 100;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}*/
+		}
 		
 		background(0);
 		fill(255);
@@ -94,11 +105,50 @@ public class Proc extends PApplet {
 		if (energy < 600)
 			energy = energy+2;
 		
+		weaponsAct();
+		
+		//Copy walls, player, weapons from other computer		
 		if (rec != null) {
-			for (int i=0; i+4<rec.length; i=i+5) {
-				stroke(rec[i], rec[i], rec[i]);
-				line(rec[i+1]+s+200, rec[i+2], rec[i+3]+s+200, rec[i+4]);
+			for (c=0; rec[c] != -1; c=c+5) {
+				stroke(rec[c], rec[c], rec[c]);
+				line(rec[c+1]+s+200, rec[c+2], rec[c+3]+s+200, rec[c+4]);
 			}
+			
+			strokeWeight(1);
+			for (c++; c+2 < rec.length; c=c+3) {
+				switch (rec[c]) {
+				case 0:
+					stroke(0, 100, 0);
+					fill(0, 100, 0);
+					ellipse(rec[c+1]-200-s, rec[c+2], 10, 15);
+					break;
+				case 1:
+					stroke(50);
+					fill(50);
+					ellipse(rec[c+1]-200-s, rec[c+2], 25, 10);
+					ellipse(rec[c+1]-200-s, rec[c+2] + 5, 5, 10);
+					ellipse(rec[c+1]-200-s, rec[c+2] - 5, 5, 10);
+					break;
+				case 2:
+					stroke(50);
+					fill(50);
+					ellipse(rec[c+1]-200-s, rec[c+2], 20, 30);
+					rect(rec[c+1] - 10-200-s, rec[c+2] - 25, 20, 10);
+					break;
+				case 4:
+					stroke(50);
+					fill(50);
+					ellipse(rec[c+1]-200-s, rec[c+2], 10, 10);
+					break;
+				case 6:
+					strokeWeight(8);
+					stroke(200, 10, 10);
+			   		fill(200,10,10);
+			    	ellipse(rec[c+1]-200-s,rec[c+2],10,10);
+				}
+			}
+			strokeWeight(8);
+			
 			if (rec.length > 1) {
 				stroke(255, 0, 0);
 				point(rec[rec.length-2]+s+200, rec[rec.length-1]);
@@ -178,9 +228,6 @@ public class Proc extends PApplet {
 		}
 		
 		p.run();
-		if (weaponsAct()==true){
-			weapons.remove(n);
-		}
 	}
 	
 	public void mouseReleased() {
@@ -189,17 +236,19 @@ public class Proc extends PApplet {
 			fill(255, 0, 0);
 			Weapon n = null;
 		
-			if (item.equals("Drone")) {
+			if (item == 1) {
 				if (mouseX < throwX)
 					n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX - 10), calculateSpeed(throwY, throwY), this);
 				else
 					n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX + 10), calculateSpeed(throwY, throwY), this);
 			}
-			else if (item.equals("Atomic"))
+			else if (item == 2)
 				n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
-			else if (item.equals("Grenade"))
+			else if (item == 0)
 				n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
-			System.out.println(n);
+			else if (item == 4)
+				n = new Homing(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), 
+						rec[rec.length-2]+s+200, rec[rec.length-1], this);
 			weapons.add(n);
 			n.display();
 		}
@@ -218,15 +267,15 @@ public class Proc extends PApplet {
 	
 	private void guide(int x1, int y1, int x2, int y2) {
 		stroke(255, 0, 0);
-		if (item.equals("Atomic"))
+		if (item == 2)
 			arrow(x1, y1, x1, y1 + 50);
-		else if (item.equals("Drone")) {
+		else if (item == 1) {
 			if (x2 < x1)
 				arrow(x1, y1, x1 - 50, y1);
 			else
 				arrow(x1, y1, x1 + 50, y1);
 		}
-		else if (item.equals("Grenade"))
+		else if (item == 0 || item == 4)
 			arrow(x1, y1, x2, y2);
 	}
 	
@@ -247,11 +296,28 @@ public class Proc extends PApplet {
 
 	private void weaponsAct() {
 		for (int x = 0; x < weapons.size(); x++) {
-			if (weapons.get(x).getMidThrow()) {
-				weapons.get(x).act();
-				weapons.get(x).display();
-			} else {
-				weapons.remove(x);
+			Weapon n = weapons.get(x);
+			switch (n.act(rec[rec.length-2]+s+200, rec[rec.length-1])) {
+			case 0:
+				System.out.println("Game Over. You Win!");
+				try {
+					in.close();
+					out.close();
+					client.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.exit(0);
+				break;
+			case 1:
+				if (n.explode())
+					weapons.remove(x);
+				break;
+			case 2:
+				strokeWeight(1);
+				n.display();
+				strokeWeight(8);
+				break;
 			}
 		}
 	}

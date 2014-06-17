@@ -30,13 +30,13 @@ public class Wall {
 			return false;
 	}
 	
-	public int[] addInt(int[] walls2, int count) {
-		walls2[count*5] = life;
-		walls2[count*5+1] = px;
-		walls2[count*5+2] = py;
-		walls2[count*5+3] = x;
-		walls2[count*5+4] = y;
-		return walls2;
+	public int[] addInt(int[] sent, int count) {
+		sent[count] = life;
+		sent[count+1] = px;
+		sent[count+2] = py;
+		sent[count+3] = x;
+		sent[count+4] = y;
+		return sent;
 	}
 	
 	public String toString() {

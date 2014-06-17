@@ -1,24 +1,14 @@
 import processing.core.*;
 
 public class Weapon {
-	int x, y;
-	int a = -1;
-	String type;
-	int speedX, speedY, gravity;
-	boolean midThrow;
+	int x, y, c;
+	int type;
+	int speedX, speedY;
 	PApplet p;
 
 	public Weapon(PApplet p) {
+		c = 10;
 		this.p = p;
-		midThrow = true;
-	}
-
-	public boolean getMidThrow() {
-		return midThrow;
-	}
-
-	public void setMidThrow(boolean x) {
-		midThrow = x;
 	}
 
 	public void display() {
@@ -26,10 +16,48 @@ public class Weapon {
 		p.fill(255, 0, 0);
 		p.rect(x, y, 10, 10);
 	}
+	
+	public int[] addInt(int[] sent, int count) {
+		sent[count] = type;
+		sent[count+1] = x;
+		sent[count+2] = y;
+		return sent;
+	}
+	
+	public int getType() {
+		return type;
+	}
 
-	public boolean act() {
+	public boolean check(int pX, int pY) {
+		int dist = (int)Math.sqrt((x-pX)*(x-pX) + (y-pY)*(y-pY));
+		return dist < 8;
+	}
+	
+	public boolean checkWall() {
+		p.loadPixels();
+		for (int i=-8; i<8; i++)
+			for (int j=-8; j<8; j++)
+				if (p.pixels[(y+i)*p.width + x+j] < -10 && !(x > 1080 || x < 720) && !(y > 480 || y < 120)) {
+					return true;
+				}		
 		return false;
 	}
+	
+	public int act(int pX, int pY) {return 0;}
+	
 	public String toString() {return "";}
-	public void explode(){}
+	
+	public boolean explode() {
+		type = 6;
+		c--;
+		if (c <= 0)
+			return true;
+		
+		p.stroke(200, 10, 10);
+   		p.fill(200,10,10);
+    	p.ellipse(x,y,10,10);
+    	return false;
+  	}
+
+	public void set(int pX, int pY) {}
 }

@@ -7,16 +7,24 @@ public class Atomic extends Weapon {
 		this.y = y;
 		speedX = sx;
 		speedY = sy;
+		type = 2;
 	}
 
 	public String toString() {
 		return "Atomic";
 	}
 
-	public boolean act() {
+	public int act(int pX, int pY) {
+		if (check(pX, pY)) {
+			explode();
+			return 0;
+		}
+		else if (checkWall()) {
+			return 1;
+		}
 		x = x + speedX;
 		y = y + speedY;
-		return false;
+		return 2;
 	}
 
 	public void display() {
@@ -25,9 +33,4 @@ public class Atomic extends Weapon {
 		p.ellipse(x, y, 20, 30);
 		p.rect(x - 10, y - 25, 20, 10);
 	}
-	public void explode(){
-		p.fill(200,10,10);
-    	p.ellipse(x,y,100,100);
-  	}
-
 }

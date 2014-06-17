@@ -7,16 +7,24 @@ public class Drone extends Weapon {
 		this.y = y;
 		speedX = sx;
 		speedY = sy;
+		type = 1;
 	}
 
 	public String toString() {
 		return "Drone";
 	}
 
-	public boolean act() {
+	public int act(int pX, int pY) {
+		if (check(pX, pY)) {
+			explode();
+			return 0;
+		}
+		else if (checkWall()) {
+			return 1;
+		}
 		x = x + speedX;
 		y = y + speedY;
-		return false;
+		return 2;
 	}
 
 	public void display() {
@@ -26,9 +34,4 @@ public class Drone extends Weapon {
 		p.ellipse(x, y + 5, 5, 10);
 		p.ellipse(x, y - 5, 5, 10);
 	}
-	public void explode(){
-   		p.fill(200,10,10);
-   		p.ellipse(x,y,100,100);
-  	}
-
 }

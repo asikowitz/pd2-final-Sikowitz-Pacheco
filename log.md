@@ -19,11 +19,11 @@ Date : Name : Description
 06/12/14 : Andrew Sikowitz : More networking testing/research. Networking does not work over the internet (due to firewall/port forwarding issues?).
 06/13/14 : Andrew Sikowitz : Networking success at school--only between computers on the same system, however. Implemented sending information about the player location between computers.
 06/14/14 : Andrew Sikowitz : Merged files, creating weapon class files<br>
-06/15/14 : Andrew Sikowitz : Revamped merged files for more fluidity, specifically moving the "guide" methods to the main file and allowing for super() use in weapon constructions.
-06/15/14 : Andrew Sikowitz : Many small fixes, such as cleaning up of useless code or making code more efficient or cleaning up graphics.
+06/15/14 : Andrew Sikowitz : Revamped merged files for more fluidity, specifically moving the "guide" methods to the main file and allowing for super() use in weapon constructions.<br>
+06/15/14 : Andrew Sikowitz : Many small fixes, such as cleaning up of useless code or making code more efficient or cleaning up graphics.<br>
 06/15/14 : Kai Pacheco : Implemented Laser weapon and added homing missile <br>
 06/16/14 : Kai Pacheco : Gave life to weapons and created weapon choice system <br>
-06/16/14 : Andrew Sikowitz : Created interaction between weapons and walls and players. Implemented display of weapons and explosions from opposite player (over network). Revamped detection of type of item from string to int. 
-06/17/14 : Andrew Sikowitz : Cleaned up life and explosions of weapons. Created rough end of game.
+06/16/14 : Andrew Sikowitz : Created interaction between weapons and walls and players. Implemented display of weapons and explosions from opposite player (over network). Revamped detection of type of item from string to int. <br>
+06/17/14 : Andrew Sikowitz : Cleaned up life and explosions of weapons. Created rough end of game.<br>
 
 Some logs are based on git commit history, because I (Andrew) forgot about this log...

@@ -26,17 +26,33 @@ public class LinkedList {
 		if (head != null) {
 			head = head.getNext();
 			length--;
+			if (head == null)
+				tail = null;
 		}
 	}
 	
-	public Wall get(int i) {
-		Node n = head;
-		for (int x=0; x<i; x++)
-			n = n.getNext();
-		return n.getData();
+	public int addInt(int[] sent) {
+		int c = 0;
+		for (Node temp = head; temp != null; temp = temp.getNext(), c = c+5)
+			temp.getData().addInt(sent, c);
+		
+		return c;
+	}
+	
+	public void display() {
+		for (Node temp = head; temp != null; temp = temp.getNext())
+			if (!temp.getData().display())
+				remove();
 	}
 	
 	public int size() {
 		return length;
+	}
+	
+	public String toString() {
+		String s = "";
+		for (Node temp = head; temp != null; temp = temp.getNext())
+			s = s + temp.getData() + ", ";
+		return s;
 	}
 }

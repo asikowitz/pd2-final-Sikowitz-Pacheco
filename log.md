@@ -27,4 +27,6 @@ Date : Name : Description
 06/16/14 : Andrew Sikowitz : Created interaction between weapons and walls and players. Implemented display of weapons and explosions from opposite player (over network). Revamped detection of type of item from string to int. <br>
 06/17/14 : Andrew Sikowitz : Cleaned up life and explosions of weapons. Created rough end of game.<br>
 06/17/14 : Kai Pacheco : Added Player Power Ups <br>
+06/17/14 : Andrew Sikowitz : Added linked list implementation for walls. Created explosions for certain weapons and wall-collisions for weapons. Final bug fixes and changes. Power Ups implementation using a stack. <br>
+
 Some logs are based on git commit history, because I (Andrew) forgot about this log...

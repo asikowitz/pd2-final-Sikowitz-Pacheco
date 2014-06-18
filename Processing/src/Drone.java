@@ -14,6 +14,11 @@ public class Drone extends Weapon {
 		return "Drone";
 	}
 	
+	public boolean check(int pX, int pY) {
+		int dist = (int)Math.sqrt((x-pX)*(x-pX) + (y-pY)*(y-pY));
+		return dist < 14;
+	}
+	
 	public boolean checkWall() { //Override
 		p.loadPixels();
 

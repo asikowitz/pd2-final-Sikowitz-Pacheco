@@ -1,33 +1,26 @@
+import processing.core.*;
 
-public class Laser extends Weapon{
-  public Laser(int x, int y, int sx,int sy){
-    setX(x);
-    setY(y);
-    setSX(sx);
-    setSY(sy);
-    blocked=false;
-	setAlive(true);
-	setLife(100);
-  }
-  String toString(){
-    return "Laser";
-  }
-  boolean act(){
-  	return false;
+public class Laser extends Weapon {
+	public Laser(int x, int y, int sx, int sy, PApplet p) {
+		super(p);
+		this.x = x;
+		this.y = y;
+		speedX = sx;
+		speedY = sy;
+		type = 5;
 	}
-  void display(){
-      stroke(255,0,0);
-      fill(255,0,0);
-      rect(275,500,50,50);
-      if(mousePressed){
-        line(300,500,mouseX+10*(mouseX-x),mouseY+10*(mouseY-y));
-      }
-  }
-  void guide(int x1, int y1, int x2, int y2){
-  
-  }
-  void explode(){}
-  
-  
-  
+
+	boolean act() {
+		return false;
+	}
+
+	public void display() {
+		p.stroke(255, 0, 0);
+		p.fill(255, 0, 0);
+		p.rect(275, 500, 50, 50);
+		if (p.mousePressed) {
+			p.line(300, 500, p.mouseX + 10 * (p.mouseX - x), p.mouseY + 10 * (p.mouseY - y));
+		}
+	}
+
 }

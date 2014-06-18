@@ -22,7 +22,7 @@ public class HomingMissle extends Weapon{
     return (n.getY()-y)/10;
   }
   boolean act(){
-     if(x>n.getX()-8 && x<n.getX()+8 && y>n.getY()-8 && y<n.getY()-8){
+     if(x>n.getX()-10 && x<n.getX()+10 && y>n.getY()-10 && y<n.getY()-10){
        explode();
        return true;
      }

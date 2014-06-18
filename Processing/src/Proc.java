@@ -235,6 +235,7 @@ public class Proc extends PApplet {
 		p.run();
 	}
 	private void powerUpsAct(){
+		strokeWeight(8);
 		Random xSpot=new Random.nextInt(600);
 		Random ySpot=new Random.nextInt(600);
 		Random rand= new Random.nextInt(100);
@@ -248,7 +249,17 @@ public class Proc extends PApplet {
 			powerUps.add(new Homing(xSpot,ySpot,0,0, this))
 		}
 		for(int x=0;x<powerUps.size();x++){
-			(powerUps.get(x)).display();
+			String s=(powerUps.get(x)).toString();
+			if(s.equals("Drone")){
+				stroke(100);
+			}else if(s.equals("Atomic")){
+				stroke(50);
+			}else if(s.equals("Grenade")){
+				stroke(0,100,0);
+			}else{
+				stroke(0,0,200);
+			}
+			point(xSpot,ySpot);
 		}
 		if(PowerUpCounter>=100){
 			PowerUpCounter=0;

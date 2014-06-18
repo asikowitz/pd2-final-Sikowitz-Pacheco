@@ -12,7 +12,8 @@ To run, you must first open a server. <br>
 java -cp "../core.jar:." Server <br>
 The two players (on different computers) should then open clients. Note that they must be on the same network as the server.  (Tested on Homer) <br>
 java -cp "../core.jar:." Proc <Server IP> <br>
-The game will start once both clients have connected <br> <br>
+The game will start once both clients have connected <br> 
+Use A to move left, D to move right, and W to jump. Click on your own playing field to draw walls. If you have a weapon, click on the black surrounding the other player's playing field and drag to aim the weapon, releasing to fire. <br> <br>
 
 Features: Ability to draw lines in processing and "walk" on those lines as player. Ability to have multiple keyboard inputs at once. Multiple weapons with varied movement and effects. Networking between a server and two clients sending information about weapons, walls, and player location. Energy mechanic. Ability to create weapons at different angles. Linked List for storing walls, because I can store them by always added to the tail and deleting the head only. Stack storage for power ups. <br> <br>
 

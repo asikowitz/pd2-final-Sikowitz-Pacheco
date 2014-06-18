@@ -45,8 +45,10 @@ public class Homing extends Weapon {
 	}
 
 	public void display() {
-		p.stroke(50);
-		p.fill(50);
+		p.stroke(0,0,200);
+		p.fill(0,0,200);
 		p.ellipse(x, y, 10, 10);
+		p.line(x+5,y-2,x+5,y+12);
+		p.line(x-2,y+5,x-2,y+12);
 	}
 }

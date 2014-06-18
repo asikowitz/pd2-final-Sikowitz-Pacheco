@@ -10,7 +10,7 @@ public class Proc extends PApplet {
 	private Player p;
 	private int energy;
 	private int[] sent, rec;
-	private int PowerUpCounter;
+	private int powerUpCounter;
 	
 	//private ServerSocket serverSocket;
 	private Socket client; //, server;
@@ -40,7 +40,8 @@ public class Proc extends PApplet {
 		textSize(20);
 		walls.add(new Wall(s/2-10, s/2+10, s/2+10, s/2+10, this));
 		p = new Player(s/2, s/2, this);
-		PowerUpCounter=0;
+		
+		powerUpCounter=0;
 		midGuide=false;
   		midDraw=false;
   		
@@ -233,35 +234,49 @@ public class Proc extends PApplet {
 		
 		p.run();
 	}
-	private void powerUpsAct(){
-		Random r = new Random();
-		int xSpot = r.nextInt(s) + 100;
-		int ySpot = r.nextInt(s) + 100;
-		int rand = r.nextInt(4);
-		switch (rand) {
-		case 0:
-			powerups.add(new Grenade(xSpot,ySpot,0,0, this));
-			break;
-		case 1:
-			powerups.add(new Drone(xSpot,ySpot,0,0,this));
-			break;
-		case 2:
-			powerups.add(new Atomic(xSpot,ySpot,0,0, this));
-			break;
-		case 3:
-			powerups.add(new Homing(xSpot,ySpot,0,0,0,0, this));
-			break;
+	private void powerUpsAct() {
+		if (powerUpCounter >= 0) {
+			powerUpCounter = 0;
+			Random r = new Random();
+			int xSpot = r.nextInt(s) + 100;
+			int ySpot = r.nextInt(s) + 100;
+			int rand = r.nextInt(4);
+			switch (rand) {
+			case 0:
+				powerups.add(new Grenade(xSpot,ySpot,0,0, this));
+				break;
+			case 1:
+				powerups.add(new Drone(xSpot,ySpot,0,0,this));
+				break;
+			case 2:
+				powerups.add(new Atomic(xSpot,ySpot,0,0, this));
+				break;
+			case 3:
+				powerups.add(new Homing(xSpot,ySpot,0,0,0,0, this));
+				break;
+			}
 		}
 			
-		for(int x=0;x<powerups.size();x++){
-			(powerups.get(x)).display();
+		for(int x=0; x<powerups.size(); x++) {
+			strokeWeight(8);
+			switch (powerups.get(x).getType()) {
+			case 0:
+				stroke(0, 100, 0);
+				break;
+			case 1:
+				stroke(100);
+				break;
+			case 2:
+				stroke(50);
+				break;
+			case 3:
+				stroke(0, 0, 200);
+				break;
+			}
+			point(powerups.get(x).getX(), powerups.get(x).getX());
 		}
-		if(PowerUpCounter>=100){
-			PowerUpCounter=0;
-		}else{
-			PowerUpCounter+=1;
-		}
-	
+		
+		powerUpCounter++;
 	}
 	
 	public void mouseReleased() {

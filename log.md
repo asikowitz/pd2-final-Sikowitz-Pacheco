@@ -12,6 +12,7 @@ Date : Name : Description
 06/06/14 : Andrew Sikowitz : Studying Networking/Socket Programming<br>
 06/07/14 : Andrew Sikowitz : Testing basic socket programs (not pushed)<br>
 06/08/14 : Andrew Sikowitz : Testing networking implemented in game<br>
+06/08/14 : Kai Pacheco : Made weapons more effeciently connected with each other<br>
 06/08/14 : Andrew Sikowitz : Created removal from wall arraylist and more mouse restrictions for drawing walls<br>
 06/10/14 : Andrew Sikowitz : Completely new implementation of networking (instead of both players having client and server, there is now one remote server and each player has a client)<br>
 06/11/14 : Andrew Sikowitz : Attempts to show walls from opposite players<br>
@@ -25,5 +26,5 @@ Date : Name : Description
 06/16/14 : Kai Pacheco : Gave life to weapons and created weapon choice system <br>
 06/16/14 : Andrew Sikowitz : Created interaction between weapons and walls and players. Implemented display of weapons and explosions from opposite player (over network). Revamped detection of type of item from string to int. <br>
 06/17/14 : Andrew Sikowitz : Cleaned up life and explosions of weapons. Created rough end of game.<br>
-
+06/17/14 : Kai Pacheco : Added Player Power Ups <br>
 Some logs are based on git commit history, because I (Andrew) forgot about this log...

@@ -6,8 +6,8 @@ import java.io.*;
 
 public class Proc extends PApplet {
 	private static final int s = 400;
-	private ArrayList<Wall> walls = new ArrayList<Wall>();
-	//private LinkedList walls = new LinkedList(); //Linked list specifically designed for walls, so no <specification> necessary
+	//private ArrayList<Wall> walls = new ArrayList<Wall>();
+	private LinkedList walls = new LinkedList(); //Linked list specifically designed for walls, so no <specification> necessary
 	private Player p;
 	private int energy;
 	private int[] sent, rec;
@@ -22,7 +22,6 @@ public class Proc extends PApplet {
 	private int keysDown;
 	private char prevKey;
 	private char bypass; //Prevents glitches when a specific key is hit and let go twice while still holding down a or d
-
 
 	//For weapons
 	private int throwX, throwY;
@@ -46,7 +45,7 @@ public class Proc extends PApplet {
   		
 		energy = 600;
 		int port = 6066;
-		String serverName = args[0];
+		String serverName = "localhost";
 		
 		System.out.println("Attempting to connect to " + serverName + " on port " + port);
 		
@@ -67,9 +66,11 @@ public class Proc extends PApplet {
 		//Clear, redraw bottom, draw and write energy
 	
 		sent = new int[walls.size()*5+3*weapons.size()+3];
-		int c = 0;
-		for (int i=0; i<walls.size(); i++, c=c+5)
-			walls.get(i).addInt(sent, c);
+		/*for (int i=0; i<walls.size(); i++, c=c+5)
+			walls.get(i).addInt(sent, c);*/
+		
+		int c = walls.addInt(sent);
+		
 		sent[c] = -1;
 		c++;
 		for (int i=0; i<weapons.size(); i++, c=c+3)
@@ -183,9 +184,10 @@ public class Proc extends PApplet {
 			}
 		}
 		
-		for (int i=0; i<walls.size(); i++)
+		/*for (int i=0; i<walls.size(); i++)
 			if(!walls.get(i).display())
-				walls.remove(i);
+				walls.remove(i);*/
+		walls.display();
 		
 		if (keyPressed) { //void keyPressed() is not called often enough
 			if (key != prevKey || key == bypass) { 

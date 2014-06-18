@@ -15,7 +15,12 @@ public class Weapon {
 		this.p = p;
 		life=100;
 	}
-
+	public int getX(){
+		return x;
+	}
+	public int getY(){
+		return Y;
+	}
 	public void display() {
 		p.stroke(255, 00, 0);
 		p.fill(255, 0, 0);

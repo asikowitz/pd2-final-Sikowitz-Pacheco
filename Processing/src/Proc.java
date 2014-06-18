@@ -11,6 +11,7 @@ public class Proc extends PApplet {
 	private Player p;
 	private int energy;
 	private int[] sent, rec;
+	private int PowerUpCounter;
 	
 	//private ServerSocket serverSocket;
 	private Socket client; //, server;
@@ -28,7 +29,8 @@ public class Proc extends PApplet {
 	private boolean midGuide, midDraw;
 	private int item = 0;
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
-	
+	private ArrayList<Weapon> powerups = new ArrayList<Weapon>();	
+
 	public void setup() {
 		size(s*2+400, s+200);
 		background(0);
@@ -39,7 +41,7 @@ public class Proc extends PApplet {
 		textSize(20);
 		walls.add(new Wall(s/2-10, s/2+10, s/2+10, s/2+10, this));
 		p = new Player(s/2, s/2, this);
-		
+		PowerUpCounter=0;
 		midGuide=false;
   		midDraw=false;
   		
@@ -106,7 +108,7 @@ public class Proc extends PApplet {
 		noSmooth();
 		if (energy < 600)
 			energy = energy+2;
-		
+		powerUpsAct();
 		weaponsAct();
 		
 		//Copy walls, player, weapons from other computer		
@@ -231,6 +233,29 @@ public class Proc extends PApplet {
 		}
 		
 		p.run();
+	}
+	private void powerUpsAct(){
+		Random xSpot=new Random.nextInt(600);
+		Random ySpot=new Random.nextInt(600);
+		Random rand= new Random.nextInt(100);
+		if(rand<1){
+			powerUps.add(new Drone(xSpot,ySpot,0,0,this))
+		}else if(rand<2){
+			powerUps.add(new Atomic(xSpot,ySpot,0,0, this))
+		}else if(rand<3){
+			powerUps.add(new Grenade(xSpot,ySpot,0,0, this))
+		}else if(rand<4){
+			powerUps.add(new Homing(xSpot,ySpot,0,0, this))
+		}
+		for(int x=0;x<powerUps.size();x++){
+			(powerUps.get(x)).display();
+		}
+		if(PowerUpCounter>=100){
+			PowerUpCounter=0;
+		}else{
+			PowerUpCounter+=1;
+		}
+	
 	}
 	
 	public void mouseReleased() {

@@ -28,8 +28,8 @@ public class Drone extends Weapon {
 	}
 
 	public void display() {
-		p.stroke(50);
-		p.fill(50);
+		p.stroke(100);
+		p.fill(100);
 		p.ellipse(x, y, 25, 10);
 		p.ellipse(x, y + 5, 5, 10);
 		p.ellipse(x, y - 5, 5, 10);

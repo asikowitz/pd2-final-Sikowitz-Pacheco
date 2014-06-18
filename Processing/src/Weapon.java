@@ -4,11 +4,13 @@ public class Weapon {
 	int x, y, c;
 	int type;
 	int speedX, speedY;
+	boolean hitWhite;
 
 	PApplet p;
 	int life;
 
 	public Weapon(PApplet p) {
+		hitWhite = false;
 		c = 10;
 		this.p = p;
 		life=100;
@@ -38,11 +40,18 @@ public class Weapon {
 	
 	public boolean checkWall() {
 		p.loadPixels();
+		boolean valid = false;
 		for (int i=-8; i<8; i++)
 			for (int j=-8; j<8; j++)
-				if (p.pixels[(y+i)*p.width + x+j] < -10 && !(x > 1080 || x < 720) && !(y > 480 || y < 120)) {
+				if (p.pixels[(y+i)*p.width + x+j] < -10 && (p.pixels[(y+i)*p.width + x+j] != -16777216 ^ hitWhite)) {
+					//&& !(x > 1080 || x < 720) && !(y > 480 || y < 120)) {
 					return true;
 				}
+				else if (p.pixels[(y+i)*p.width + x+j] == -16777216)
+					valid = true;
+		
+		if (!valid)
+			hitWhite = true;
 		return false;
 	}
 	

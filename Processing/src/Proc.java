@@ -26,7 +26,7 @@ public class Proc extends PApplet {
 	//For weapons
 	private int throwX, throwY;
 	private boolean midGuide, midDraw;
-	private int item = 4;
+	private int item = 0;
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 	
 	public void setup() {

@@ -27,20 +27,23 @@ public class Homing extends Weapon {
 	}
 
 	public int act(int pX, int pY) {
-		if (check(pX, pY)) {
+		life --;
+
+		if (life <= 0) {
+			explode();
+			return 1;
+		}
+		else if (check(pX, pY)) {
 			explode();
 			return 0;
 		}
 		else if (checkWall()) {
 			return 1;
 		}
-		else if (life <= 0) {
-			return 1;
-		}
+
 		
-		life --;
-		x = x + (pX - x) / 5;
-		y = y + (pY - y) / 5;
+		x = x + (pX - x) / 10;
+		y = y + (pY - y) / 10;
 		return 2;
 	}
 
@@ -48,7 +51,7 @@ public class Homing extends Weapon {
 		p.stroke(0,0,200);
 		p.fill(0,0,200);
 		p.ellipse(x, y, 10, 10);
-		p.line(x+5,y-2,x+5,y+12);
-		p.line(x-2,y+5,x-2,y+12);
+		//p.line(x+5,y-2,x+5,y+12);
+		//p.line(x-2,y+5,x-2,y+12);
 	}
 }

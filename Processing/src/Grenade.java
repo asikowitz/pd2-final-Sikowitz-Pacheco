@@ -4,16 +4,18 @@ public class Grenade extends Weapon {
 	boolean grounded;
 	boolean blocked;
 	int life;
+	double a;
 
 	public Grenade(int x, int y, int sx, int sy, PApplet p) {
 		super(p);
-		life = 200;
+		life = 150;
 		this.x = x;
 		this.y = y;
 		speedX = sx;
 		speedY = sy;
 		blocked = false;
 		type = 0;
+		double a = 0.1;
 	}
 
 	public String toString() {
@@ -21,21 +23,29 @@ public class Grenade extends Weapon {
 	}
 
 	public int act(int pX, int pY) {
-		if (check(pX, pY)) {
+		life--;
+
+		if (y > 550)
+			return 1;
+		
+		if (life <= 0) {
+			explode();
+			return 1;
+		}
+		else if (check(pX, pY)) {
 			explode();
 			return 0;
 		}
 		else if (checkWall()) {
 			return 2;
 		}
-		else if (life <= 0) {
-			return 1;
-		}
-		
-		life--;
+
+		a = a + 0.1;
 		x = x + speedX;
 		y = y + speedY;
-		speedY = speedY + 1;
+		speedY = speedY + (int) a;
+		if ((int) a >= 1)
+			a = 0.1;
 		return 2;
 	}
 

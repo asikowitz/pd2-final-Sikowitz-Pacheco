@@ -19,7 +19,7 @@ public class Player {
 		checkGrounded();
 
 		if (!grounded && a > 0) {
-			if (y+4+a < p.height && !(p.pixels[(y+4+(int)a)*p.width + x] < -100000)) {
+			if (y+4+a < p.height && !(p.pixels[(y+4+(int)a)*p.width + x] < -10)) {
 				y = (int)Math.round(y+a);
 				a = a+0.15;
 			}
@@ -27,7 +27,7 @@ public class Player {
 				a = a/3;
 		}
 		else if (!grounded) {
-			if (y-4+a > 0 && !(p.pixels[(y-4+(int)a)*p.width + x] < -100000)) {
+			if (y-4+a > 0 && !(p.pixels[(y-4+(int)a)*p.width + x] < -10)) {
 				y = (int)Math.round(y+a);
 				a = a+0.15;
 			}
@@ -47,13 +47,13 @@ public class Player {
 	public void move(int sign) {
 		boolean blocked = false;
 		for (int i=5; i<8; i++) {
-			if (p.pixels[(y-i)*p.width + x + sign] < -100000)
+			if (p.pixels[(y-i)*p.width + x + sign] < -10)
 				blocked = true;
 		}
 		
 		if (!blocked) {
 			for (int i=4; i>=-6; i--) {
-				if (p.pixels[(y-i)*p.width + x + sign] < -100000) {
+				if (p.pixels[(y-i)*p.width + x + sign] < -10) {
 					x = x + sign;
 					y = y - i - 3;
 					return;
@@ -76,7 +76,7 @@ public class Player {
 	
 	public void checkGrounded() {
 		for (int i=0; i<5; i++) {
-			if (p.pixels[(y+i)*p.width + x] < -100000) {
+			if (p.pixels[(y+i)*p.width + x] < -10) {
 				grounded = true;
 				return;
 			}

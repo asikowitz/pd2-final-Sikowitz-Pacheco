@@ -1,4 +1,5 @@
 import processing.core.*;
+
 import java.util.*;
 import java.net.*;
 import java.io.*;
@@ -26,9 +27,10 @@ public class Proc extends PApplet {
 	//For weapons
 	private int throwX, throwY;
 	private boolean midGuide, midDraw;
-	private int item = 0;
+	private int item = -1;
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
-	private ArrayList<Weapon> powerups = new ArrayList<Weapon>();	
+	private ArrayList<Weapon> powerups = new ArrayList<Weapon>(); //For efficiency, should really just be an arraylist of ordered pairs.
+	private Stack<Integer> loaded = new Stack<Integer>();
 
 	public void setup() {
 		size(s*2+400, s+200);
@@ -104,12 +106,12 @@ public class Proc extends PApplet {
 		stroke(0, 0, 255);
 		fill(0);
 		text("Energy", s*2/3+100, s/17+100);
+		if (!loaded.empty())
+			text(convert(loaded.peek()), 100, 120);
 		line(s*2/3+100, s/12+100, s*2/3+energy/5+100, s/12+100);
 		noSmooth();
 		if (energy < 600)
 			energy = energy+2;
-		powerUpsAct();
-		weaponsAct();
 		
 		//Copy walls, player, weapons from other computer		
 		if (rec != null) {
@@ -149,6 +151,10 @@ public class Proc extends PApplet {
 					stroke(200, 10, 10);
 			   		fill(200,10,10);
 			    	ellipse(rec[c+1]-200-s,rec[c+2],10,10);
+				/*case 7:
+					stroke(255);
+			   		fill(255);
+			    	ellipse(rec[c+1]-200-s,rec[c+2],50,50);*/
 				}
 			}
 			strokeWeight(8);
@@ -233,13 +239,16 @@ public class Proc extends PApplet {
 		}
 		
 		p.run();
+		powerUpsAct();
+		weaponsAct();
 	}
 	private void powerUpsAct() {
-		if (powerUpCounter >= 0) {
+		if (powerUpCounter >= 100) {
 			powerUpCounter = 0;
 			Random r = new Random();
+			Random r2 = new Random();
 			int xSpot = r.nextInt(s) + 100;
-			int ySpot = r.nextInt(s) + 100;
+			int ySpot = r2.nextInt(s) + 100;
 			int rand = r.nextInt(4);
 			switch (rand) {
 			case 0:
@@ -257,7 +266,7 @@ public class Proc extends PApplet {
 			}
 		}
 			
-		for(int x=0; x<powerups.size(); x++) {
+		for (int x=0; x<powerups.size(); x++) {
 			strokeWeight(8);
 			switch (powerups.get(x).getType()) {
 			case 0:
@@ -273,7 +282,19 @@ public class Proc extends PApplet {
 				stroke(0, 0, 200);
 				break;
 			}
-			point(powerups.get(x).getX(), powerups.get(x).getX());
+			point(powerups.get(x).getX(), powerups.get(x).getY());
+		}
+		
+		for (int i=0; i<powerups.size(); i++) {
+			int x = powerups.get(i).getX();
+			int y = powerups.get(i).getY();
+			int pX = p.getX();
+			int pY = p.getY();
+			int dist = (int)Math.sqrt((x-pX)*(x-pX) + (y-pY)*(y-pY));
+			if (dist < 10) {
+				loaded.push(powerups.get(i).getType());
+				powerups.remove(i);
+			}
 		}
 		
 		powerUpCounter++;
@@ -285,24 +306,30 @@ public class Proc extends PApplet {
 			fill(255, 0, 0);
 			Weapon n = null;
 		
-			if (item == 1) {
-				if (mouseX < throwX)
-					n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX - 10), calculateSpeed(throwY, throwY), this);
-				else
-					n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX + 10), calculateSpeed(throwY, throwY), this);
-			}
-			else if (item == 2)
-				n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
-			else if (item == 0)
-				n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
-			else if (item == 3)
-				n = new Homing(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), 
-						rec[rec.length-2]+s+200, rec[rec.length-1], this);
-			/*else if (item == 3){
+			if (!loaded.empty() && energy > 60) {
+				energy = energy - 60;
+				item = loaded.pop();
+				if (item == 1) {
+	
+					if (mouseX < throwX)
+						n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX - 10), calculateSpeed(throwY, throwY), this);
+					else
+						n = new Drone(throwX, throwY, calculateSpeed(throwX, throwX + 10), calculateSpeed(throwY, throwY), this);
+				}
+				else if (item == 2)
+					n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
+				else if (item == 0)
+					n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
+				else if (item == 3)
+					n = new Homing(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), 
+							rec[rec.length-2]+s+200, rec[rec.length-1], this);
+				/*else if (item == 4){
 				n=new Laser(throwX,throwY,mouseX,mouseY, this); //Parameters irrelevant
-			}*/
-			weapons.add(n);
-			n.display();
+			    }*/
+				
+				weapons.add(n);
+				n.display();
+			}
 		}
 		
 		midDraw = false;
@@ -319,16 +346,19 @@ public class Proc extends PApplet {
 	
 	private void guide(int x1, int y1, int x2, int y2) {
 		stroke(255, 0, 0);
-		if (item == 2)
-			arrow(x1, y1, x1, y1 + 50);
-		else if (item == 1) {
-			if (x2 < x1)
-				arrow(x1, y1, x1 - 50, y1);
-			else
-				arrow(x1, y1, x1 + 50, y1);
+		if (!loaded.empty()) {
+			item = loaded.peek();
+			if (item == 2)
+				arrow(x1, y1, x1, y1 + 50);
+			else if (item == 1) {
+				if (x2 < x1)
+					arrow(x1, y1, x1 - 50, y1);
+				else
+					arrow(x1, y1, x1 + 50, y1);
+			}
+			else if (item == 0 || item == 3)
+				arrow(x1, y1, x2, y2);
 		}
-		else if (item == 0 || item == 3)
-			arrow(x1, y1, x2, y2);
 	}
 	
 	private void arrow(int x1, int y1, int x2, int y2) {
@@ -376,6 +406,20 @@ public class Proc extends PApplet {
 
 	private int calculateSpeed(int x1, int x2) {
 		return (x2 - x1) / 10;
+	}
+	
+	private String convert(int x) {
+		switch(x) {
+		case 0:
+			return "Grenade";
+		case 1:
+			return "Drone";
+		case 2:
+			return "Atomic";
+		case 3:
+			return "Homing";
+		}
+		return "Error";
 	}
 	
 	public static void main(String[] args) {

@@ -13,6 +13,18 @@ public class Drone extends Weapon {
 	public String toString() {
 		return "Drone";
 	}
+	
+	public boolean checkWall() { //Override
+		p.loadPixels();
+
+		if (p.pixels[(y)*p.width + x] == -16777216 && hitWhite > 5) {
+			return true;
+		}
+		else if (p.pixels[(y)*p.width + x] != -16777216)
+			hitWhite++;
+		
+		return false;
+	}
 
 	public int act(int pX, int pY) {
 		if (check(pX, pY)) {
@@ -20,6 +32,7 @@ public class Drone extends Weapon {
 			return 0;
 		}
 		else if (checkWall()) {
+			explode();
 			return 1;
 		}
 		x = x + speedX;

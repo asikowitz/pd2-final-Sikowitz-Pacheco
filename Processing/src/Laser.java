@@ -7,7 +7,7 @@ public class Laser extends Weapon {
 		this.y = y;
 		speedX = sx;
 		speedY = sy;
-		type = 5;
+		type = 4;
 	}
 
 	boolean act() {

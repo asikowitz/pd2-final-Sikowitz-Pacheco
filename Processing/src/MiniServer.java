@@ -34,7 +34,7 @@ public class MiniServer extends Thread {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("Game Over");
 	}
 }

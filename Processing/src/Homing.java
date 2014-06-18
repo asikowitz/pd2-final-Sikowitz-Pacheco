@@ -14,7 +14,7 @@ public class Homing extends Weapon {
 		pY = py;
 		speedX = sx;
 		speedY = sy;
-		type = 4;
+		type = 3;
 	}
 
 	public String toString() {

@@ -1,5 +1,4 @@
 import processing.core.*;
-
 import java.util.*;
 import java.net.*;
 import java.io.*;
@@ -139,7 +138,7 @@ public class Proc extends PApplet {
 					ellipse(rec[c+1]-200-s, rec[c+2], 20, 30);
 					rect(rec[c+1] - 10-200-s, rec[c+2] - 25, 20, 10);
 					break;
-				case 4:
+				case 3:
 					stroke(50);
 					fill(50);
 					ellipse(rec[c+1]-200-s, rec[c+2], 10, 10);
@@ -235,20 +234,27 @@ public class Proc extends PApplet {
 		p.run();
 	}
 	private void powerUpsAct(){
-		Random xSpot=new Random.nextInt(600);
-		Random ySpot=new Random.nextInt(600);
-		Random rand= new Random.nextInt(100);
-		if(rand<1){
-			powerUps.add(new Drone(xSpot,ySpot,0,0,this))
-		}else if(rand<2){
-			powerUps.add(new Atomic(xSpot,ySpot,0,0, this))
-		}else if(rand<3){
-			powerUps.add(new Grenade(xSpot,ySpot,0,0, this))
-		}else if(rand<4){
-			powerUps.add(new Homing(xSpot,ySpot,0,0, this))
+		Random r = new Random();
+		int xSpot = r.nextInt(s) + 100;
+		int ySpot = r.nextInt(s) + 100;
+		int rand = r.nextInt(4);
+		switch (rand) {
+		case 0:
+			powerups.add(new Grenade(xSpot,ySpot,0,0, this));
+			break;
+		case 1:
+			powerups.add(new Drone(xSpot,ySpot,0,0,this));
+			break;
+		case 2:
+			powerups.add(new Atomic(xSpot,ySpot,0,0, this));
+			break;
+		case 3:
+			powerups.add(new Homing(xSpot,ySpot,0,0,0,0, this));
+			break;
 		}
-		for(int x=0;x<powerUps.size();x++){
-			(powerUps.get(x)).display();
+			
+		for(int x=0;x<powerups.size();x++){
+			(powerups.get(x)).display();
 		}
 		if(PowerUpCounter>=100){
 			PowerUpCounter=0;
@@ -274,12 +280,12 @@ public class Proc extends PApplet {
 				n = new Atomic(throwX, throwY, calculateSpeed(throwX, throwX), calculateSpeed(throwY, throwY + 10), this);
 			else if (item == 0)
 				n = new Grenade(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), this);
-			else if (item == 4)
+			else if (item == 3)
 				n = new Homing(throwX, throwY, calculateSpeed(throwX, mouseX), calculateSpeed(throwY, mouseY), 
 						rec[rec.length-2]+s+200, rec[rec.length-1], this);
-			else if (item == 3){
+			/*else if (item == 3){
 				n=new Laser(throwX,throwY,mouseX,mouseY, this); //Parameters irrelevant
-			}
+			}*/
 			weapons.add(n);
 			n.display();
 		}
@@ -306,7 +312,7 @@ public class Proc extends PApplet {
 			else
 				arrow(x1, y1, x1 + 50, y1);
 		}
-		else if (item == 0 || item == 4)
+		else if (item == 0 || item == 3)
 			arrow(x1, y1, x2, y2);
 	}
 	

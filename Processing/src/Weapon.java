@@ -19,7 +19,7 @@ public class Weapon {
 		return x;
 	}
 	public int getY(){
-		return Y;
+		return y;
 	}
 	public void display() {
 		p.stroke(255, 00, 0);

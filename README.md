@@ -16,7 +16,7 @@ The game will start once both clients have connected <br> <br>
 
 Features: Ability to draw lines in processing and "walk" on those lines as player. Ability to have multiple keyboard inputs at once. Multiple (semi-functioning) weapons. Networking between a server and two clients sending information about weapons, walls, and player location. Energy mechanic. Ability to create weapons at different angles. <br> <br>
 
-Problems: No way to pick up weapon and therefore change weapons (was going to store picked-up weapons in a stack or queue). Weapons besides Homing cause errors when they fall off screen. LinkedList implementation did not work for walls. Server does not automatically remove clients from arraylist, eventually causing null-pointer exception. <br> <br>
+Problems: Server does not automatically remove clients from arraylist, eventually causing null-pointer exception. <br> <br>
 
 Algorithms: Basic socket programming with a server that waits for two connections before initiating a game that is run on a "MiniServer"<br>
 Information is sent over the network by transforming it into an array of ints and reading this array of ints in a particular manner. <br>
